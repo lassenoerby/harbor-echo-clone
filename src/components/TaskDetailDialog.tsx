@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,8 +9,9 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, Flag } from "lucide-react";
+import { CalendarIcon, Flag, Upload, Image, X } from "lucide-react";
 import { format } from "date-fns";
+import ImageUploader from "./ImageUploader";
 
 interface TaskDetailDialogProps {
   isOpen: boolean;
@@ -50,6 +51,14 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
 
   const handleCancel = () => {
     onClose();
+  };
+
+  const handleImageUpload = (url: string) => {
+    setImageUrl(url);
+  };
+
+  const clearImage = () => {
+    setImageUrl("");
   };
 
   // Reset form state when task changes
@@ -170,14 +179,15 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
           </div>
           
           <div className="space-y-2">
-            <label htmlFor="imageUrl" className="text-sm font-medium">
-              Image URL
+            <label className="text-sm font-medium flex items-center gap-2">
+              <Image className="h-4 w-4" />
+              Task Image
             </label>
-            <Input
-              id="imageUrl"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="URL to an image (optional)"
+            
+            <ImageUploader 
+              currentImage={imageUrl} 
+              onImageUpload={handleImageUpload} 
+              onClearImage={clearImage}
             />
           </div>
           

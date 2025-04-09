@@ -6,7 +6,7 @@ import {
   CardFooter 
 } from "@/components/ui/card";
 import { Task } from "@/types/task";
-import { ChevronLeft, ChevronRight, Move, User, Clock, Calendar, Flag } from "lucide-react";
+import { ChevronLeft, ChevronRight, Move, User, Clock, Calendar, Flag, Image } from "lucide-react";
 import { format } from "date-fns";
 
 interface TaskCardProps {
@@ -57,7 +57,7 @@ const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) =
 
   // Format deadline date if it exists
   const formattedDeadline = task.deadline 
-    ? new Date(task.deadline).toLocaleDateString() 
+    ? format(new Date(task.deadline), "MMM d, yyyy")
     : null;
 
   return (
@@ -67,7 +67,17 @@ const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) =
       onDragStart={(e) => onDragStart(e, task.id)}
       onClick={handleCardClick}
     >
-      <CardContent className="p-4 relative">
+      {task.imageUrl && (
+        <div className="w-full h-32 overflow-hidden border-b">
+          <img 
+            src={task.imageUrl} 
+            alt={task.title} 
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+      
+      <CardContent className={`p-4 relative ${task.imageUrl ? 'pt-3' : ''}`}>
         <Move className="h-4 w-4 absolute right-2 top-2 text-gray-400" />
         
         {/* Priority badge if available */}
@@ -99,6 +109,12 @@ const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) =
             <div className="flex items-center text-xs text-gray-500 mt-1">
               <Calendar className="h-3 w-3 mr-1" />
               <span>Due: {formattedDeadline}</span>
+            </div>
+          )}
+          {task.imageUrl && (
+            <div className="flex items-center text-xs text-gray-500 mt-1">
+              <Image className="h-3 w-3 mr-1" />
+              <span>Has image</span>
             </div>
           )}
         </div>

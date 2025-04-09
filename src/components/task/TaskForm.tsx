@@ -18,7 +18,8 @@ import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { FileUp, User, Clock, ListTodo, Flag, CalendarIcon } from "lucide-react";
+import { User, Clock, ListTodo, Flag, CalendarIcon, Image } from "lucide-react";
+import ImageUploader from "../ImageUploader";
 
 export interface TaskFormValues {
   title: string;
@@ -63,7 +64,7 @@ const TaskForm = ({ form, onSubmit, onCancel }: TaskFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="flex items-center gap-2">
-                <FileUp className="h-4 w-4" />
+                <Textarea className="h-4 w-4" />
                 Description
               </FormLabel>
               <FormControl>
@@ -186,21 +187,16 @@ const TaskForm = ({ form, onSubmit, onCancel }: TaskFormProps) => {
           name="imageUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Upload Pictures</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <Image className="h-4 w-4" />
+                Task Image
+              </FormLabel>
               <FormControl>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="file"
-                    onChange={(e) => {
-                      // In a real app, this would upload the file to storage
-                      // For now, just store the file name
-                      if (e.target.files && e.target.files[0]) {
-                        field.onChange(e.target.files[0].name);
-                      }
-                    }}
-                    className="bg-gray-50"
-                  />
-                </div>
+                <ImageUploader
+                  currentImage={field.value || ""}
+                  onImageUpload={(url) => field.onChange(url)}
+                  onClearImage={() => field.onChange("")}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
