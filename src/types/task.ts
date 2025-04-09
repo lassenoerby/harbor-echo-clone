@@ -7,4 +7,6 @@ export interface Task {
   assignedTo?: string;
   estimatedTime?: string;
   imageUrl?: string;
+  priority?: "low" | "medium" | "high";
+  deadline?: string;
 }

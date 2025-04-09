@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Task } from "@/types/task";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import { CalendarIcon, Flag } from "lucide-react";
+import { format } from "date-fns";
 
 interface TaskDetailDialogProps {
   isOpen: boolean;
@@ -19,6 +25,10 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
   const [assignedTo, setAssignedTo] = useState(task.assignedTo || "");
   const [estimatedTime, setEstimatedTime] = useState(task.estimatedTime || "");
   const [imageUrl, setImageUrl] = useState(task.imageUrl || "");
+  const [priority, setPriority] = useState(task.priority || "");
+  const [deadline, setDeadline] = useState<Date | undefined>(
+    task.deadline ? new Date(task.deadline) : undefined
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +39,9 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       description,
       assignedTo: assignedTo || undefined,
       estimatedTime: estimatedTime || undefined,
-      imageUrl: imageUrl || undefined
+      imageUrl: imageUrl || undefined,
+      priority: priority as "low" | "medium" | "high" | undefined,
+      deadline: deadline ? deadline.toISOString() : undefined,
     };
     
     onUpdateTask(updatedTask);
@@ -48,6 +60,8 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       setAssignedTo(task.assignedTo || "");
       setEstimatedTime(task.estimatedTime || "");
       setImageUrl(task.imageUrl || "");
+      setPriority(task.priority || "");
+      setDeadline(task.deadline ? new Date(task.deadline) : undefined);
     }
   }, [isOpen, task]);
 
@@ -81,6 +95,54 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
               onChange={(e) => setDescription(e.target.value)}
               required
             />
+          </div>
+          
+          <div className="space-y-2">
+            <label htmlFor="priority" className="text-sm font-medium flex items-center gap-2">
+              <Flag className="h-4 w-4" />
+              Priority
+            </label>
+            <Select value={priority} onValueChange={setPriority}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select priority" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">None</SelectItem>
+                <SelectItem value="low">Low</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="high">High</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="deadline" className="text-sm font-medium flex items-center gap-2">
+              <CalendarIcon className="h-4 w-4" />
+              Deadline
+            </label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !deadline && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {deadline ? format(deadline, "PPP") : <span>Select a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={deadline}
+                  onSelect={setDeadline}
+                  initialFocus
+                  className={cn("p-3 pointer-events-auto")}
+                />
+              </PopoverContent>
+            </Popover>
           </div>
           
           <div className="space-y-2">

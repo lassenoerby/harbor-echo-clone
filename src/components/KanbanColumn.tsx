@@ -24,6 +24,16 @@ const KanbanColumn = ({
   onDrop,
   onTaskClick
 }: KanbanColumnProps) => {
+  // Sort tasks by priority if available (high first, then medium, then low, then no priority)
+  const sortedTasks = [...tasks].sort((a, b) => {
+    const priorityOrder = { high: 1, medium: 2, low: 3, undefined: 4 };
+    const aPriority = a.priority || "undefined";
+    const bPriority = b.priority || "undefined";
+    
+    return (priorityOrder[aPriority as keyof typeof priorityOrder] || 4) - 
+           (priorityOrder[bPriority as keyof typeof priorityOrder] || 4);
+  });
+
   return (
     <div 
       className="bg-gray-50 rounded-lg p-4 border border-gray-200"
@@ -37,7 +47,7 @@ const KanbanColumn = ({
         </span>
       </div>
       <div className="space-y-3 min-h-[300px]">
-        {tasks.map((task) => (
+        {sortedTasks.map((task) => (
           <TaskCard 
             key={task.id} 
             task={task} 
