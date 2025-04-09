@@ -27,14 +27,14 @@ const KanbanBoard = ({ onAddTask }: KanbanBoardProps = {}) => {
   const { toast } = useToast();
   // Initial sample data for the kanban board
   const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", title: "Clean dock area", description: "Remove debris from dock B", status: "new", assignedTo: "John Doe", estimatedTime: "2 hours" },
-    { id: "2", title: "Repair boat lift", description: "Hydraulic system needs maintenance", status: "prioritized", assignedTo: "Sarah Miller", estimatedTime: "1 day" },
-    { id: "3", title: "Check moorings", description: "Inspect all moorings in section C", status: "in-progress", assignedTo: "Mike Johnson" },
-    { id: "4", title: "Update harbor map", description: "Add new berths to digital map", status: "in-progress", estimatedTime: "4 hours" },
-    { id: "5", title: "Refuel maintenance boat", description: "Fill tank before weekend inspection", status: "done", assignedTo: "Emily Chen", estimatedTime: "30 minutes" },
-    { id: "6", title: "Inspect life jackets", description: "Annual safety equipment inspection", status: "new" },
-    { id: "7", title: "Paint dock markings", description: "Refresh safety lines on main dock", status: "prioritized", estimatedTime: "3 hours" },
-    { id: "8", title: "Replace broken cleat", description: "Dock A, position 5 needs new cleat", status: "done", assignedTo: "James Wilson", estimatedTime: "1 hour" },
+    { id: "1", title: "Clean dock area", description: "Remove debris from dock B", status: "new", assignedTo: "John Doe", estimatedTime: "2 hours", taskType: "harbor" },
+    { id: "2", title: "Repair boat lift", description: "Hydraulic system needs maintenance", status: "prioritized", assignedTo: "Sarah Miller", estimatedTime: "1 day", taskType: "harbor" },
+    { id: "3", title: "Check moorings", description: "Inspect all moorings in section C", status: "in-progress", assignedTo: "Mike Johnson", taskType: "harbor" },
+    { id: "4", title: "Update harbor map", description: "Add new berths to digital map", status: "in-progress", estimatedTime: "4 hours", taskType: "harbor" },
+    { id: "5", title: "Refuel boat", description: "Fill tank before weekend trip", status: "done", assignedTo: "Emily Chen", estimatedTime: "30 minutes", taskType: "boater" },
+    { id: "6", title: "Check life jackets", description: "Ensure all life jackets are onboard", status: "new", taskType: "boater" },
+    { id: "7", title: "Clean boat hull", description: "Remove barnacles and algae", status: "prioritized", estimatedTime: "3 hours", taskType: "boater" },
+    { id: "8", title: "Replace dock cleat", description: "Dock A, position 5 needs new cleat", status: "done", assignedTo: "James Wilson", estimatedTime: "1 hour", taskType: "harbor" },
   ]);
 
   // State for task detail dialog

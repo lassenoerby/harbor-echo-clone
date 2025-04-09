@@ -9,6 +9,7 @@ export interface TaskFormValues {
   imageUrl?: string;
   priority: "low" | "medium" | "high" | "";
   deadline?: Date;
+  taskType: "harbor" | "boater" | "";
 }
 
 export interface TaskFormProps {

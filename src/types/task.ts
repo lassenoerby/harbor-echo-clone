@@ -9,4 +9,5 @@ export interface Task {
   imageUrl?: string;
   priority?: "low" | "medium" | "high";
   deadline?: string;
+  taskType?: "harbor" | "boater";
 }

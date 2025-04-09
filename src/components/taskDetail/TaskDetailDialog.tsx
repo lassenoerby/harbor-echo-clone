@@ -7,6 +7,7 @@ import { PrioritySection } from "./PrioritySection";
 import { DeadlineSection } from "./DeadlineSection";
 import { AssignmentSection } from "./AssignmentSection";
 import { ImageSection } from "./ImageSection";
+import { TaskTypeSection } from "./TaskTypeSection";
 import { TaskDetailFooter } from "./TaskDetailFooter";
 
 interface TaskDetailDialogProps {
@@ -23,6 +24,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
   const [estimatedTime, setEstimatedTime] = useState(task.estimatedTime || "");
   const [imageUrl, setImageUrl] = useState(task.imageUrl || "");
   const [priority, setPriority] = useState(task.priority || "");
+  const [taskType, setTaskType] = useState(task.taskType || "harbor");
   const [deadline, setDeadline] = useState<Date | undefined>(
     task.deadline ? new Date(task.deadline) : undefined
   );
@@ -36,6 +38,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       setEstimatedTime(task.estimatedTime || "");
       setImageUrl(task.imageUrl || "");
       setPriority(task.priority || "");
+      setTaskType(task.taskType || "harbor");
       setDeadline(task.deadline ? new Date(task.deadline) : undefined);
     }
   }, [isOpen, task]);
@@ -51,6 +54,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       estimatedTime: estimatedTime || undefined,
       imageUrl: imageUrl || undefined,
       priority: priority as "low" | "medium" | "high" | undefined,
+      taskType: taskType as "harbor" | "boater" | undefined,
       deadline: deadline ? deadline.toISOString() : undefined,
     };
     
@@ -71,6 +75,11 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
             setTitle={setTitle} 
             description={description} 
             setDescription={setDescription} 
+          />
+          
+          <TaskTypeSection
+            taskType={taskType}
+            setTaskType={setTaskType}
           />
           
           <PrioritySection 

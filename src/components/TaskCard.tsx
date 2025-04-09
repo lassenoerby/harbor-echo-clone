@@ -6,8 +6,9 @@ import {
   CardFooter 
 } from "@/components/ui/card";
 import { Task } from "@/types/task";
-import { ChevronLeft, ChevronRight, Move, User, Clock, Calendar, Flag, Image } from "lucide-react";
+import { ChevronLeft, ChevronRight, Move, User, Clock, Calendar, Flag, Image, Anchor, Warehouse } from "lucide-react";
 import { format } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 
 interface TaskCardProps {
   task: Task;
@@ -55,6 +56,18 @@ const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) =
     }
   };
 
+  // Task type badge color mapping
+  const getTaskTypeColor = (taskType?: string) => {
+    switch (taskType) {
+      case "harbor":
+        return "bg-blue-100 text-blue-800";
+      case "boater":
+        return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
   // Format deadline date if it exists
   const formattedDeadline = task.deadline 
     ? format(new Date(task.deadline), "MMM d, yyyy")
@@ -62,7 +75,10 @@ const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) =
 
   return (
     <Card 
-      className="hover:shadow-md transition-shadow cursor-pointer"
+      className={`hover:shadow-md transition-shadow cursor-pointer ${
+        task.taskType === "harbor" ? "border-l-4 border-l-blue-500" : 
+        task.taskType === "boater" ? "border-l-4 border-l-green-500" : ""
+      }`}
       draggable
       onDragStart={(e) => onDragStart(e, task.id)}
       onClick={handleCardClick}
@@ -80,13 +96,27 @@ const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) =
       <CardContent className={`p-4 relative ${task.imageUrl ? 'pt-3' : ''}`}>
         <Move className="h-4 w-4 absolute right-2 top-2 text-gray-400" />
         
-        {/* Priority badge if available */}
-        {task.priority && (
-          <div className={`text-xs inline-flex items-center px-2 py-0.5 rounded ${getPriorityColor(task.priority)} mb-2`}>
-            <Flag className="h-3 w-3 mr-1" />
-            <span className="capitalize">{task.priority}</span>
-          </div>
-        )}
+        <div className="flex flex-wrap gap-2 mb-2">
+          {/* Task type badge */}
+          {task.taskType && (
+            <Badge className={`inline-flex items-center ${getTaskTypeColor(task.taskType)}`}>
+              {task.taskType === "harbor" ? (
+                <Warehouse className="h-3 w-3 mr-1" />
+              ) : (
+                <Anchor className="h-3 w-3 mr-1" />
+              )}
+              <span className="capitalize">{task.taskType}</span>
+            </Badge>
+          )}
+          
+          {/* Priority badge if available */}
+          {task.priority && (
+            <Badge className={`inline-flex items-center ${getPriorityColor(task.priority)}`}>
+              <Flag className="h-3 w-3 mr-1" />
+              <span className="capitalize">{task.priority}</span>
+            </Badge>
+          )}
+        </div>
         
         <h3 className="font-medium text-harbor-800">{task.title}</h3>
         <p className="text-sm text-gray-600 mt-1">{task.description}</p>
