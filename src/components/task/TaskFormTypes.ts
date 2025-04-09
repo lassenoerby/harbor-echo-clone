@@ -7,9 +7,9 @@ export interface TaskFormValues {
   assignedTo: string;
   estimatedTime: string;
   imageUrl?: string;
-  priority: "low" | "medium" | "high" | "";
+  priority: "low" | "medium" | "high" | "none";
   deadline?: Date;
-  taskType: "harbor" | "boater" | "";
+  taskType: "harbor" | "boater";
 }
 
 export interface TaskFormProps {

@@ -9,6 +9,7 @@ import { AssignmentSection } from "./TaskFormSections/AssignmentSection";
 import { ImageSection } from "./TaskFormSections/ImageSection";
 import { FormFooter } from "./TaskFormSections/FormFooter";
 import { TaskFormValues } from "./TaskFormTypes";
+import { TaskTypeSection } from "./TaskFormSections/TaskTypeSection";
 
 interface TaskFormProps {
   form: UseFormReturn<TaskFormValues>;
@@ -21,6 +22,7 @@ const TaskForm = ({ form, onSubmit, onCancel }: TaskFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <BasicInfoSection control={form.control} />
+        <TaskTypeSection control={form.control} />
         <PrioritySection control={form.control} />
         <DeadlineSection control={form.control} />
         <AssignmentSection control={form.control} />

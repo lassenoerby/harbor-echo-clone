@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { 
@@ -28,7 +29,8 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
       description: "",
       assignedTo: "",
       estimatedTime: "",
-      priority: "",
+      priority: "none",
+      taskType: "harbor",
     },
   });
 
@@ -51,8 +53,9 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
       assignedTo: values.assignedTo || undefined,
       estimatedTime: values.estimatedTime || undefined,
       imageUrl: values.imageUrl,
-      priority: values.priority || undefined,
+      priority: values.priority === "none" ? undefined : values.priority || undefined,
       deadline: values.deadline ? values.deadline.toISOString() : undefined,
+      taskType: values.taskType || undefined,
     });
     
     toast({
