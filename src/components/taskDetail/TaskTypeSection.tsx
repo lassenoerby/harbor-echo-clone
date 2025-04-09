@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 
 interface TaskTypeSectionProps {
   taskType: string;
-  setTaskType: (value: string) => void;
+  setTaskType: (value: "harbor" | "boater" | string) => void;
 }
 
 export const TaskTypeSection = ({ taskType, setTaskType }: TaskTypeSectionProps) => {

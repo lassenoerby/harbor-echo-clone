@@ -24,7 +24,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
   const [estimatedTime, setEstimatedTime] = useState(task.estimatedTime || "");
   const [imageUrl, setImageUrl] = useState(task.imageUrl || "");
   const [priority, setPriority] = useState(task.priority || "");
-  const [taskType, setTaskType] = useState(task.taskType || "harbor");
+  const [taskType, setTaskType] = useState<"harbor" | "boater" | string>(task.taskType || "harbor");
   const [deadline, setDeadline] = useState<Date | undefined>(
     task.deadline ? new Date(task.deadline) : undefined
   );
@@ -42,6 +42,11 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       setDeadline(task.deadline ? new Date(task.deadline) : undefined);
     }
   }, [isOpen, task]);
+
+  // Create a handler function that takes a string value
+  const handleTaskTypeChange = (value: string) => {
+    setTaskType(value);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,7 +84,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
           
           <TaskTypeSection
             taskType={taskType}
-            setTaskType={setTaskType}
+            setTaskType={handleTaskTypeChange}
           />
           
           <PrioritySection 
