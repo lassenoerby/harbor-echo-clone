@@ -71,26 +71,24 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] h-[85vh] p-0 flex flex-col overflow-hidden">
+      <DialogContent className="sm:max-w-[500px] max-h-[85vh] p-0 flex flex-col overflow-hidden">
         <DialogHeader className="p-6 pb-2">
           <DialogTitle className="text-xl font-bold text-harbor-800">Create New Task</DialogTitle>
         </DialogHeader>
         
         <div className="flex flex-col h-full overflow-hidden">
-          <div className="flex-grow overflow-auto px-6">
-            <div className="pb-4">
-              <PredefinedTaskSelector
-                selectedPredefined={selectedPredefined}
-                onSelectPredefined={handlePredefinedTaskSelect}
-                onCustomTask={handleCustomTask}
-              />
-              
-              <TaskForm 
-                form={form}
-                onSubmit={handleSubmit}
-                onCancel={onClose}
-              />
-            </div>
+          <div className="flex-grow overflow-auto px-6 pb-4">
+            <PredefinedTaskSelector
+              selectedPredefined={selectedPredefined}
+              onSelectPredefined={handlePredefinedTaskSelect}
+              onCustomTask={handleCustomTask}
+            />
+            
+            <TaskForm 
+              form={form}
+              onSubmit={handleSubmit}
+              onCancel={onClose}
+            />
           </div>
         </div>
       </DialogContent>
