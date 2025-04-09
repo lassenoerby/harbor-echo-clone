@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import HarborNavbar from "@/components/HarborNavbar";
 import HarborFooter from "@/components/HarborFooter";
@@ -49,12 +50,12 @@ const maintenanceTrendsData = [
 const mockMaintenanceItems: MaintenanceItem[] = [
   { id: "1", name: "Engine Service", count: 48, trend: "up", percentChange: 12 },
   { id: "2", name: "Hull Cleaning", count: 36, trend: "up", percentChange: 8 },
-  { name: "Electrical Repairs", count: 24, trend: "down", percentChange: 5 },
-  { name: "Deck Washing", count: 22, trend: "up", percentChange: 15 },
-  { name: "Sail Repair", count: 18, trend: "down", percentChange: 7 },
-  { name: "Navigation System Check", count: 15, trend: "neutral", percentChange: 0 },
-  { name: "Propeller Maintenance", count: 12, trend: "up", percentChange: 20 },
-  { name: "Interior Cleaning", count: 10, trend: "down", percentChange: 10 },
+  { id: "3", name: "Electrical Repairs", count: 24, trend: "down", percentChange: 5 },
+  { id: "4", name: "Deck Washing", count: 22, trend: "up", percentChange: 15 },
+  { id: "5", name: "Sail Repair", count: 18, trend: "down", percentChange: 7 },
+  { id: "6", name: "Navigation System Check", count: 15, trend: "neutral", percentChange: 0 },
+  { id: "7", name: "Propeller Maintenance", count: 12, trend: "up", percentChange: 20 },
+  { id: "8", name: "Interior Cleaning", count: 10, trend: "down", percentChange: 10 },
 ];
 
 const Dashboard = () => {
