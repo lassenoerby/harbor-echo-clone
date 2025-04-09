@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Clipboard, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CtaSection = () => {
   return (
@@ -12,9 +13,11 @@ const CtaSection = () => {
             Ready to get started?
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" className="bg-white text-harbor-700 hover:bg-harbor-50 gap-2">
-              <Clipboard className="h-5 w-5" />
-              Open Task Overview
+            <Button size="lg" className="bg-white text-harbor-700 hover:bg-harbor-50 gap-2" asChild>
+              <Link to="/task-overview">
+                <Clipboard className="h-5 w-5" />
+                Open Task Overview
+              </Link>
             </Button>
             <Button size="lg" variant="outline" className="text-white border-white hover:bg-harbor-600/50 gap-2">
               <Plus className="h-5 w-5" />

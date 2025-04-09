@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Clipboard, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -17,9 +18,12 @@ const HeroSection = () => {
               <Button 
                 size="lg" 
                 className="bg-harbor-600 hover:bg-harbor-700 gap-2"
+                asChild
               >
-                <Clipboard className="h-5 w-5" />
-                Open Task Overview
+                <Link to="/task-overview">
+                  <Clipboard className="h-5 w-5" />
+                  Open Task Overview
+                </Link>
               </Button>
               <Button 
                 size="lg" 
