@@ -93,7 +93,7 @@ export const SubtasksSection = ({ control }: SubtasksSectionProps) => {
                     control={control}
                     name={`subtasks.${index}.header`}
                     render={({ field: headerField }) => (
-                      <div className={`font-medium ${checkboxField.value ? "line-through text-gray-500" : ""}`}>
+                      <div className={`font-medium ${fields[index].completed ? "line-through text-gray-500" : ""}`}>
                         {headerField.value || `Subtask ${index + 1}`}
                       </div>
                     )}
@@ -169,7 +169,7 @@ export const SubtasksSection = ({ control }: SubtasksSectionProps) => {
                           <Input 
                             placeholder="Subtask header" 
                             {...field} 
-                            disabled={!editingSubtasks.includes(field.id)}
+                            disabled={!editingSubtasks.includes(fields[index].id)}
                           />
                         </FormControl>
                         <FormMessage />
@@ -187,7 +187,7 @@ export const SubtasksSection = ({ control }: SubtasksSectionProps) => {
                           <Input 
                             placeholder="Subtask description" 
                             {...field} 
-                            disabled={!editingSubtasks.includes(field.id)}
+                            disabled={!editingSubtasks.includes(fields[index].id)}
                           />
                         </FormControl>
                         <FormMessage />
@@ -205,7 +205,7 @@ export const SubtasksSection = ({ control }: SubtasksSectionProps) => {
                           <Input 
                             placeholder="Person responsible" 
                             {...field} 
-                            disabled={!editingSubtasks.includes(field.id)}
+                            disabled={!editingSubtasks.includes(fields[index].id)}
                           />
                         </FormControl>
                         <FormMessage />
