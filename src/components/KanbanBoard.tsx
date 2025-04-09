@@ -25,6 +25,23 @@ const KanbanBoard = () => {
     );
   };
 
+  // Handle drag start event
+  const handleDragStart = (e: React.DragEvent, taskId: string) => {
+    e.dataTransfer.setData("taskId", taskId);
+  };
+
+  // Handle drag over event
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  // Handle drop event
+  const handleDrop = (e: React.DragEvent, status: string) => {
+    e.preventDefault();
+    const taskId = e.dataTransfer.getData("taskId");
+    moveTask(taskId, status);
+  };
+
   // Group tasks by status
   const columns = {
     new: tasks.filter(task => task.status === "new"),
@@ -40,24 +57,36 @@ const KanbanBoard = () => {
         tasks={columns.new} 
         status="new"
         moveTask={moveTask}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragStart={handleDragStart}
       />
       <KanbanColumn 
         title="Prioritized" 
         tasks={columns.prioritized} 
         status="prioritized"
         moveTask={moveTask}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragStart={handleDragStart}
       />
       <KanbanColumn 
         title="In Progress" 
         tasks={columns["in-progress"]} 
         status="in-progress"
         moveTask={moveTask}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragStart={handleDragStart}
       />
       <KanbanColumn 
         title="Done" 
         tasks={columns.done} 
         status="done"
         moveTask={moveTask}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragStart={handleDragStart}
       />
     </div>
   );

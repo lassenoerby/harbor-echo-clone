@@ -5,8 +5,18 @@ import HarborFooter from "@/components/HarborFooter";
 import KanbanBoard from "@/components/KanbanBoard";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const TaskOverview = () => {
+  const { toast } = useToast();
+  
+  const handleCreateTask = () => {
+    toast({
+      title: "Create Task",
+      description: "Task creation functionality will be implemented soon!",
+    });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <HarborNavbar />
@@ -14,7 +24,10 @@ const TaskOverview = () => {
         <div className="section-container">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-3xl font-bold text-harbor-800">Task Overview</h1>
-            <Button className="bg-harbor-600 hover:bg-harbor-700 gap-2">
+            <Button 
+              className="bg-harbor-600 hover:bg-harbor-700 gap-2"
+              onClick={handleCreateTask}
+            >
               <Plus className="h-5 w-5" />
               Create Task
             </Button>
