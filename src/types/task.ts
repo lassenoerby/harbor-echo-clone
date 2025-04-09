@@ -1,4 +1,11 @@
 
+export interface Subtask {
+  id: string;
+  description: string;
+  responsible?: string;
+  completed: boolean;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -10,4 +17,5 @@ export interface Task {
   priority?: "low" | "medium" | "high";
   deadline?: string;
   taskType?: "harbor" | "boater";
+  subtasks?: Subtask[];
 }

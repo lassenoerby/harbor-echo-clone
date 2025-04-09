@@ -32,6 +32,7 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
       estimatedTime: "",
       priority: "none",
       taskType: "harbor",
+      subtasks: [],
     },
   });
 
@@ -57,6 +58,7 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
       priority: values.priority === "none" ? undefined : values.priority || undefined,
       deadline: values.deadline ? values.deadline.toISOString() : undefined,
       taskType: values.taskType || undefined,
+      subtasks: values.subtasks.length > 0 ? values.subtasks : undefined,
     });
     
     toast({

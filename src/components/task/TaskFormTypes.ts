@@ -1,5 +1,5 @@
 
-import { Task } from "@/types/task";
+import { Subtask } from "@/types/task";
 
 export interface TaskFormValues {
   title: string;
@@ -10,6 +10,7 @@ export interface TaskFormValues {
   priority: "low" | "medium" | "high" | "none";
   deadline?: Date;
   taskType: "harbor" | "boater";
+  subtasks: Subtask[];
 }
 
 export interface TaskFormProps {

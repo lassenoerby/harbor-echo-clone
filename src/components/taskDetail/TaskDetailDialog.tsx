@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Task } from "@/types/task";
+import { Task, Subtask } from "@/types/task";
 import { TitleDescriptionSection } from "./TitleDescriptionSection";
 import { PrioritySection } from "./PrioritySection";
 import { DeadlineSection } from "./DeadlineSection";
 import { AssignmentSection } from "./AssignmentSection";
 import { ImageSection } from "./ImageSection";
 import { TaskTypeSection } from "./TaskTypeSection";
+import { SubtasksSection } from "./SubtasksSection";
 import { TaskDetailFooter } from "./TaskDetailFooter";
 
 interface TaskDetailDialogProps {
@@ -29,6 +30,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
   const [deadline, setDeadline] = useState<Date | undefined>(
     task.deadline ? new Date(task.deadline) : undefined
   );
+  const [subtasks, setSubtasks] = useState<Subtask[]>(task.subtasks || []);
 
   // Reset form state when task changes
   useEffect(() => {
@@ -41,6 +43,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       setPriority(task.priority || "none");
       setTaskType(task.taskType || "harbor");
       setDeadline(task.deadline ? new Date(task.deadline) : undefined);
+      setSubtasks(task.subtasks || []);
     }
   }, [isOpen, task]);
 
@@ -62,6 +65,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       priority: priority === "none" ? undefined : priority as "low" | "medium" | "high" | undefined,
       taskType: taskType as "harbor" | "boater" | undefined,
       deadline: deadline ? deadline.toISOString() : undefined,
+      subtasks: subtasks.length > 0 ? subtasks : undefined,
     };
     
     onUpdateTask(updatedTask);
@@ -104,6 +108,11 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
               setAssignedTo={setAssignedTo} 
               estimatedTime={estimatedTime} 
               setEstimatedTime={setEstimatedTime} 
+            />
+            
+            <SubtasksSection 
+              subtasks={subtasks}
+              setSubtasks={setSubtasks}
             />
             
             <ImageSection 
