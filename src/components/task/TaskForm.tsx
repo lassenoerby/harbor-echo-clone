@@ -11,6 +11,7 @@ import { FormFooter } from "./TaskFormSections/FormFooter";
 import { TaskFormValues } from "./TaskFormTypes";
 import { TaskTypeSection } from "./TaskFormSections/TaskTypeSection";
 import { SubtasksSection } from "./TaskFormSections/SubtasksSection";
+import { PriceSection } from "./TaskFormSections/PriceSection";
 
 interface TaskFormProps {
   form: UseFormReturn<TaskFormValues>;
@@ -27,6 +28,7 @@ const TaskForm = ({ form, onSubmit, onCancel }: TaskFormProps) => {
         <PrioritySection control={form.control} />
         <DeadlineSection control={form.control} />
         <AssignmentSection control={form.control} />
+        <PriceSection control={form.control} />
         <SubtasksSection control={form.control} />
         <ImageSection control={form.control} />
         <FormFooter onCancel={onCancel} />

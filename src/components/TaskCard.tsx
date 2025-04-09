@@ -6,7 +6,7 @@ import {
   CardFooter 
 } from "@/components/ui/card";
 import { Task } from "@/types/task";
-import { ChevronLeft, ChevronRight, Move, User, Clock, Calendar, Flag, Image, Anchor, Warehouse } from "lucide-react";
+import { ChevronLeft, ChevronRight, Move, User, Clock, Calendar, Flag, Image, Anchor, Warehouse, DollarSign, Send } from "lucide-react";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 
@@ -116,6 +116,14 @@ const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) =
               <span className="capitalize">{task.priority}</span>
             </Badge>
           )}
+          
+          {/* Invoice badge for boater tasks */}
+          {task.taskType === "boater" && task.invoiceSent && (
+            <Badge className="inline-flex items-center bg-green-100 text-green-800">
+              <Send className="h-3 w-3 mr-1" />
+              <span>Invoiced</span>
+            </Badge>
+          )}
         </div>
         
         <h3 className="font-medium text-harbor-800">{task.title}</h3>
@@ -139,6 +147,12 @@ const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) =
             <div className="flex items-center text-xs text-gray-500 mt-1">
               <Calendar className="h-3 w-3 mr-1" />
               <span>Due: {formattedDeadline}</span>
+            </div>
+          )}
+          {task.price !== undefined && (
+            <div className="flex items-center text-xs text-gray-500 mt-1">
+              <DollarSign className="h-3 w-3 mr-1" />
+              <span>${task.price.toFixed(2)}</span>
             </div>
           )}
           {task.imageUrl && (

@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Task, Subtask } from "@/types/task";
 import { TitleDescriptionSection } from "./TitleDescriptionSection";
 import { PrioritySection } from "./PrioritySection";
@@ -11,6 +10,9 @@ import { ImageSection } from "./ImageSection";
 import { TaskTypeSection } from "./TaskTypeSection";
 import { SubtasksSection } from "./SubtasksSection";
 import { TaskDetailFooter } from "./TaskDetailFooter";
+import { PriceSection } from "./PriceSection";
+import { InvoiceSection } from "./InvoiceSection";
+import { useToast } from "@/hooks/use-toast";
 
 interface TaskDetailDialogProps {
   isOpen: boolean;
@@ -20,6 +22,7 @@ interface TaskDetailDialogProps {
 }
 
 const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDialogProps) => {
+  const { toast } = useToast();
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [assignedTo, setAssignedTo] = useState(task.assignedTo || "");
@@ -31,6 +34,9 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
     task.deadline ? new Date(task.deadline) : undefined
   );
   const [subtasks, setSubtasks] = useState<Subtask[]>(task.subtasks || []);
+  const [price, setPrice] = useState<number | undefined>(task.price);
+  const [invoiceSent, setInvoiceSent] = useState<boolean | undefined>(task.invoiceSent);
+  const [invoiceSentDate, setInvoiceSentDate] = useState<string | undefined>(task.invoiceSentDate);
 
   // Reset form state when task changes
   useEffect(() => {
@@ -44,12 +50,25 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       setTaskType(task.taskType || "harbor");
       setDeadline(task.deadline ? new Date(task.deadline) : undefined);
       setSubtasks(task.subtasks || []);
+      setPrice(task.price);
+      setInvoiceSent(task.invoiceSent);
+      setInvoiceSentDate(task.invoiceSentDate);
     }
   }, [isOpen, task]);
 
   // Create a handler function that takes a string value
   const handleTaskTypeChange = (value: string) => {
     setTaskType(value);
+  };
+
+  const handleSendInvoice = () => {
+    setInvoiceSent(true);
+    setInvoiceSentDate(new Date().toISOString());
+    
+    toast({
+      title: "Invoice Sent",
+      description: `Invoice for "$${price}" has been sent to the boat owner.`,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -66,6 +85,9 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       taskType: taskType as "harbor" | "boater" | undefined,
       deadline: deadline ? deadline.toISOString() : undefined,
       subtasks: subtasks.length > 0 ? subtasks : undefined,
+      price: price,
+      invoiceSent: invoiceSent,
+      invoiceSentDate: invoiceSentDate,
     };
     
     onUpdateTask(updatedTask);
@@ -110,6 +132,22 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
                 estimatedTime={estimatedTime} 
                 setEstimatedTime={setEstimatedTime} 
               />
+              
+              <PriceSection
+                price={price}
+                setPrice={setPrice}
+              />
+              
+              {taskType === "boater" && (
+                <InvoiceSection
+                  taskId={task.id}
+                  taskType={taskType}
+                  price={price}
+                  invoiceSent={invoiceSent}
+                  invoiceSentDate={invoiceSentDate}
+                  onSendInvoice={handleSendInvoice}
+                />
+              )}
               
               <SubtasksSection 
                 subtasks={subtasks}

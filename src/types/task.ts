@@ -19,4 +19,7 @@ export interface Task {
   deadline?: string;
   taskType?: "harbor" | "boater";
   subtasks?: Subtask[];
+  price?: number;
+  invoiceSent?: boolean;
+  invoiceSentDate?: string;
 }

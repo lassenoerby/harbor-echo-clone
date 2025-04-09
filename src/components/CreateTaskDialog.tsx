@@ -32,6 +32,7 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
       priority: "none",
       taskType: "harbor",
       subtasks: [],
+      price: undefined,
     },
   });
 
@@ -58,6 +59,8 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
       deadline: values.deadline ? values.deadline.toISOString() : undefined,
       taskType: values.taskType || undefined,
       subtasks: values.subtasks.length > 0 ? values.subtasks : undefined,
+      price: values.price,
+      invoiceSent: false,
     });
     
     toast({

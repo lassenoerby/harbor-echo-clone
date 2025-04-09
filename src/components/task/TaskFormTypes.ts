@@ -11,6 +11,7 @@ export interface TaskFormValues {
   deadline?: Date;
   taskType: "harbor" | "boater";
   subtasks: Subtask[];
+  price?: number;
 }
 
 export interface TaskFormProps {
