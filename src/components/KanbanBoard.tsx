@@ -1,9 +1,27 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import KanbanColumn from "@/components/KanbanColumn";
 import { Task } from "@/types/task";
 
-const KanbanBoard = () => {
+// This will be exposed via props in a future implementation
+const addTask = (tasks: Task[], newTask: Omit<Task, "id">): Task[] => {
+  // Generate a simple ID (in a real app, this would come from the backend)
+  const newId = (tasks.length + 1).toString();
+  
+  return [
+    ...tasks,
+    {
+      id: newId,
+      ...newTask
+    }
+  ];
+};
+
+interface KanbanBoardProps {
+  onAddTask?: (task: Omit<Task, "id">) => void;
+}
+
+const KanbanBoard = ({ onAddTask }: KanbanBoardProps = {}) => {
   // Initial sample data for the kanban board
   const [tasks, setTasks] = useState<Task[]>([
     { id: "1", title: "Clean dock area", description: "Remove debris from dock B", status: "new" },
@@ -15,6 +33,13 @@ const KanbanBoard = () => {
     { id: "7", title: "Paint dock markings", description: "Refresh safety lines on main dock", status: "prioritized" },
     { id: "8", title: "Replace broken cleat", description: "Dock A, position 5 needs new cleat", status: "done" },
   ]);
+
+  // Listen for new tasks from parent component
+  useEffect(() => {
+    if (onAddTask) {
+      // Implementation would be here if we were getting tasks from a parent
+    }
+  }, [onAddTask]);
 
   // Function to move tasks between columns
   const moveTask = (taskId: string, newStatus: string) => {
@@ -41,6 +66,19 @@ const KanbanBoard = () => {
     const taskId = e.dataTransfer.getData("taskId");
     moveTask(taskId, status);
   };
+
+  // Add a new task
+  const handleAddTask = (newTask: Omit<Task, "id">) => {
+    setTasks(prevTasks => addTask(prevTasks, newTask));
+  };
+
+  // Expose the add task method to the parent component (if needed)
+  useEffect(() => {
+    if (window) {
+      // This is a hack for demo purposes - in a real app we'd use context or props
+      (window as any).addHarborTask = handleAddTask;
+    }
+  }, []);
 
   // Group tasks by status
   const columns = {

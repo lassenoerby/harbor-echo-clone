@@ -6,14 +6,27 @@ import KanbanBoard from "@/components/KanbanBoard";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import CreateTaskDialog from "@/components/CreateTaskDialog";
+import { Task } from "@/types/task";
 
 const TaskOverview = () => {
   const { toast } = useToast();
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   
   const handleCreateTask = () => {
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsCreateDialogOpen(false);
+  };
+
+  const handleTaskCreated = (newTask: Omit<Task, "id">) => {
+    // The actual task creation will be handled in the KanbanBoard component
+    // We'll pass the task through to the KanbanBoard component
     toast({
-      title: "Create Task",
-      description: "Task creation functionality will be implemented soon!",
+      title: "Task Created",
+      description: `Task "${newTask.title}" has been created!`,
     });
   };
 
@@ -36,6 +49,12 @@ const TaskOverview = () => {
         </div>
       </main>
       <HarborFooter />
+      
+      <CreateTaskDialog
+        isOpen={isCreateDialogOpen}
+        onClose={handleCloseDialog}
+        onCreateTask={handleTaskCreated}
+      />
     </div>
   );
 };
