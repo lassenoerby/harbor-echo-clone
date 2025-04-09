@@ -20,7 +20,7 @@ export const PrioritySection = ({ priority, setPriority }: PrioritySectionProps)
           <SelectValue placeholder="Select priority" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">None</SelectItem>
+          <SelectItem value="none">None</SelectItem>
           <SelectItem value="low">Low</SelectItem>
           <SelectItem value="medium">Medium</SelectItem>
           <SelectItem value="high">High</SelectItem>

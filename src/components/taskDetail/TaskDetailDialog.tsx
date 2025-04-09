@@ -23,7 +23,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
   const [assignedTo, setAssignedTo] = useState(task.assignedTo || "");
   const [estimatedTime, setEstimatedTime] = useState(task.estimatedTime || "");
   const [imageUrl, setImageUrl] = useState(task.imageUrl || "");
-  const [priority, setPriority] = useState(task.priority || "");
+  const [priority, setPriority] = useState(task.priority || "none");
   const [taskType, setTaskType] = useState<"harbor" | "boater" | string>(task.taskType || "harbor");
   const [deadline, setDeadline] = useState<Date | undefined>(
     task.deadline ? new Date(task.deadline) : undefined
@@ -37,7 +37,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       setAssignedTo(task.assignedTo || "");
       setEstimatedTime(task.estimatedTime || "");
       setImageUrl(task.imageUrl || "");
-      setPriority(task.priority || "");
+      setPriority(task.priority || "none");
       setTaskType(task.taskType || "harbor");
       setDeadline(task.deadline ? new Date(task.deadline) : undefined);
     }
@@ -58,7 +58,7 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
       assignedTo: assignedTo || undefined,
       estimatedTime: estimatedTime || undefined,
       imageUrl: imageUrl || undefined,
-      priority: priority as "low" | "medium" | "high" | undefined,
+      priority: priority === "none" ? undefined : priority as "low" | "medium" | "high" | undefined,
       taskType: taskType as "harbor" | "boater" | undefined,
       deadline: deadline ? deadline.toISOString() : undefined,
     };
