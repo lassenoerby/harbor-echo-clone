@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Clipboard, Plus } from "lucide-react";
+import { Clipboard, ChartBar, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
@@ -29,9 +29,12 @@ const HeroSection = () => {
                 size="lg" 
                 variant="outline" 
                 className="border-harbor-600 text-harbor-600 gap-2"
+                asChild
               >
-                <Plus className="h-5 w-5" />
-                Create Task
+                <Link to="/dashboard">
+                  <ChartBar className="h-5 w-5" />
+                  View Dashboard
+                </Link>
               </Button>
             </div>
           </div>

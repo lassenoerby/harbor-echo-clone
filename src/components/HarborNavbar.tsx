@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HarborNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,18 +16,27 @@ const HarborNavbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center">
-            <a href="#" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <span className="text-2xl font-bold text-harbor-600">Harba</span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-gray-600 hover:text-harbor-600 transition-colors">Features</a>
-            <a href="#how-it-works" className="text-gray-600 hover:text-harbor-600 transition-colors">How It Works</a>
-            <a href="#testimonials" className="text-gray-600 hover:text-harbor-600 transition-colors">Testimonials</a>
-            <Button className="bg-harbor-600 hover:bg-harbor-700">
-              Get Started
+            <Link to="/task-overview" className="text-gray-600 hover:text-harbor-600 transition-colors">
+              Task Overview
+            </Link>
+            <Link to="/dashboard" className="text-gray-600 hover:text-harbor-600 transition-colors">
+              Dashboard
+            </Link>
+            <Button 
+              className="bg-harbor-600 hover:bg-harbor-700 gap-2"
+              asChild
+            >
+              <Link to="/task-overview">
+                <Plus className="h-5 w-5" />
+                Create Task
+              </Link>
             </Button>
           </div>
 
@@ -51,29 +61,28 @@ const HarborNavbar = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 pb-6 animate-fade-in">
             <div className="flex flex-col space-y-4">
-              <a
-                href="#features"
+              <Link
+                to="/task-overview"
                 className="text-gray-600 hover:text-harbor-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Features
-              </a>
-              <a
-                href="#how-it-works"
+                Task Overview
+              </Link>
+              <Link
+                to="/dashboard"
                 className="text-gray-600 hover:text-harbor-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                How It Works
-              </a>
-              <a
-                href="#testimonials"
-                className="text-gray-600 hover:text-harbor-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
+                Dashboard
+              </Link>
+              <Button 
+                className="bg-harbor-600 hover:bg-harbor-700 w-full gap-2"
+                asChild
               >
-                Testimonials
-              </a>
-              <Button className="bg-harbor-600 hover:bg-harbor-700 w-full">
-                Get Started
+                <Link to="/task-overview" onClick={() => setIsMenuOpen(false)}>
+                  <Plus className="h-5 w-5" />
+                  Create Task
+                </Link>
               </Button>
             </div>
           </div>
