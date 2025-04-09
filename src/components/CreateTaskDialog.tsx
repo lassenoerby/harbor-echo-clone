@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { 
@@ -10,7 +9,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Task } from "@/types/task";
 import PredefinedTaskSelector, { predefinedTasks } from "@/components/task/PredefinedTaskSelector";
-import TaskForm, { TaskFormValues } from "@/components/task/TaskForm";
+import TaskForm from "@/components/task/TaskForm";
+import { TaskFormValues } from "@/components/task/TaskFormTypes";
 
 interface CreateTaskDialogProps {
   isOpen: boolean;
