@@ -12,32 +12,40 @@ interface TaskCardProps {
   task: Task;
   moveTask: (taskId: string, newStatus: string) => void;
   onDragStart: (e: React.DragEvent, taskId: string) => void;
+  onTaskClick: (task: Task) => void;
 }
 
-const TaskCard = ({ task, moveTask, onDragStart }: TaskCardProps) => {
+const TaskCard = ({ task, moveTask, onDragStart, onTaskClick }: TaskCardProps) => {
   // Define the next and previous statuses
   const statusOrder = ["new", "prioritized", "in-progress", "done"];
   const currentIndex = statusOrder.indexOf(task.status);
   const canMoveLeft = currentIndex > 0;
   const canMoveRight = currentIndex < statusOrder.length - 1;
 
-  const handleMoveLeft = () => {
+  const handleMoveLeft = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click
     if (canMoveLeft) {
       moveTask(task.id, statusOrder[currentIndex - 1]);
     }
   };
 
-  const handleMoveRight = () => {
+  const handleMoveRight = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click
     if (canMoveRight) {
       moveTask(task.id, statusOrder[currentIndex + 1]);
     }
   };
 
+  const handleCardClick = () => {
+    onTaskClick(task);
+  };
+
   return (
     <Card 
-      className="hover:shadow-md transition-shadow cursor-move"
+      className="hover:shadow-md transition-shadow cursor-pointer"
       draggable
       onDragStart={(e) => onDragStart(e, task.id)}
+      onClick={handleCardClick}
     >
       <CardContent className="p-4 relative">
         <Move className="h-4 w-4 absolute right-2 top-2 text-gray-400" />

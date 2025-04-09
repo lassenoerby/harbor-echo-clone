@@ -11,6 +11,7 @@ interface KanbanColumnProps {
   onDragStart: (e: React.DragEvent, taskId: string) => void;
   onDragOver: (e: React.DragEvent) => void;
   onDrop: (e: React.DragEvent, status: string) => void;
+  onTaskClick: (task: Task) => void;
 }
 
 const KanbanColumn = ({ 
@@ -20,7 +21,8 @@ const KanbanColumn = ({
   moveTask, 
   onDragStart, 
   onDragOver, 
-  onDrop 
+  onDrop,
+  onTaskClick
 }: KanbanColumnProps) => {
   return (
     <div 
@@ -41,6 +43,7 @@ const KanbanColumn = ({
             task={task} 
             moveTask={moveTask}
             onDragStart={onDragStart}
+            onTaskClick={onTaskClick}
           />
         ))}
       </div>

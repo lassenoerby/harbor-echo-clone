@@ -1,7 +1,9 @@
 
 import React, { useState, useEffect } from "react";
 import KanbanColumn from "@/components/KanbanColumn";
+import TaskDetailDialog from "@/components/TaskDetailDialog";
 import { Task } from "@/types/task";
+import { useToast } from "@/hooks/use-toast";
 
 // This will be exposed via props in a future implementation
 const addTask = (tasks: Task[], newTask: Omit<Task, "id">): Task[] => {
@@ -22,17 +24,22 @@ interface KanbanBoardProps {
 }
 
 const KanbanBoard = ({ onAddTask }: KanbanBoardProps = {}) => {
+  const { toast } = useToast();
   // Initial sample data for the kanban board
   const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", title: "Clean dock area", description: "Remove debris from dock B", status: "new" },
-    { id: "2", title: "Repair boat lift", description: "Hydraulic system needs maintenance", status: "prioritized" },
-    { id: "3", title: "Check moorings", description: "Inspect all moorings in section C", status: "in-progress" },
-    { id: "4", title: "Update harbor map", description: "Add new berths to digital map", status: "in-progress" },
-    { id: "5", title: "Refuel maintenance boat", description: "Fill tank before weekend inspection", status: "done" },
+    { id: "1", title: "Clean dock area", description: "Remove debris from dock B", status: "new", assignedTo: "John Doe", estimatedTime: "2 hours" },
+    { id: "2", title: "Repair boat lift", description: "Hydraulic system needs maintenance", status: "prioritized", assignedTo: "Sarah Miller", estimatedTime: "1 day" },
+    { id: "3", title: "Check moorings", description: "Inspect all moorings in section C", status: "in-progress", assignedTo: "Mike Johnson" },
+    { id: "4", title: "Update harbor map", description: "Add new berths to digital map", status: "in-progress", estimatedTime: "4 hours" },
+    { id: "5", title: "Refuel maintenance boat", description: "Fill tank before weekend inspection", status: "done", assignedTo: "Emily Chen", estimatedTime: "30 minutes" },
     { id: "6", title: "Inspect life jackets", description: "Annual safety equipment inspection", status: "new" },
-    { id: "7", title: "Paint dock markings", description: "Refresh safety lines on main dock", status: "prioritized" },
-    { id: "8", title: "Replace broken cleat", description: "Dock A, position 5 needs new cleat", status: "done" },
+    { id: "7", title: "Paint dock markings", description: "Refresh safety lines on main dock", status: "prioritized", estimatedTime: "3 hours" },
+    { id: "8", title: "Replace broken cleat", description: "Dock A, position 5 needs new cleat", status: "done", assignedTo: "James Wilson", estimatedTime: "1 hour" },
   ]);
+
+  // State for task detail dialog
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
 
   // Listen for new tasks from parent component
   useEffect(() => {
@@ -48,6 +55,12 @@ const KanbanBoard = ({ onAddTask }: KanbanBoardProps = {}) => {
         task.id === taskId ? { ...task, status: newStatus } : task
       )
     );
+    
+    // Show toast notification
+    toast({
+      title: "Task Updated",
+      description: `Task status changed to ${newStatus.replace('-', ' ')}.`,
+    });
   };
 
   // Handle drag start event
@@ -72,6 +85,32 @@ const KanbanBoard = ({ onAddTask }: KanbanBoardProps = {}) => {
     setTasks(prevTasks => addTask(prevTasks, newTask));
   };
 
+  // Handle task click
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setIsTaskDetailOpen(true);
+  };
+
+  // Handle task update
+  const handleUpdateTask = (updatedTask: Task) => {
+    setTasks(prevTasks => 
+      prevTasks.map(task => 
+        task.id === updatedTask.id ? updatedTask : task
+      )
+    );
+    
+    toast({
+      title: "Task Updated",
+      description: `Task "${updatedTask.title}" has been updated.`,
+    });
+  };
+
+  // Close task detail dialog
+  const handleCloseTaskDetail = () => {
+    setIsTaskDetailOpen(false);
+    setSelectedTask(null);
+  };
+
   // Expose the add task method to the parent component (if needed)
   useEffect(() => {
     if (window) {
@@ -89,44 +128,59 @@ const KanbanBoard = ({ onAddTask }: KanbanBoardProps = {}) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <KanbanColumn 
-        title="New Tasks" 
-        tasks={columns.new} 
-        status="new"
-        moveTask={moveTask}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onDragStart={handleDragStart}
-      />
-      <KanbanColumn 
-        title="Prioritized" 
-        tasks={columns.prioritized} 
-        status="prioritized"
-        moveTask={moveTask}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onDragStart={handleDragStart}
-      />
-      <KanbanColumn 
-        title="In Progress" 
-        tasks={columns["in-progress"]} 
-        status="in-progress"
-        moveTask={moveTask}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onDragStart={handleDragStart}
-      />
-      <KanbanColumn 
-        title="Done" 
-        tasks={columns.done} 
-        status="done"
-        moveTask={moveTask}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onDragStart={handleDragStart}
-      />
-    </div>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <KanbanColumn 
+          title="New Tasks" 
+          tasks={columns.new} 
+          status="new"
+          moveTask={moveTask}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onDragStart={handleDragStart}
+          onTaskClick={handleTaskClick}
+        />
+        <KanbanColumn 
+          title="Prioritized" 
+          tasks={columns.prioritized} 
+          status="prioritized"
+          moveTask={moveTask}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onDragStart={handleDragStart}
+          onTaskClick={handleTaskClick}
+        />
+        <KanbanColumn 
+          title="In Progress" 
+          tasks={columns["in-progress"]} 
+          status="in-progress"
+          moveTask={moveTask}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onDragStart={handleDragStart}
+          onTaskClick={handleTaskClick}
+        />
+        <KanbanColumn 
+          title="Done" 
+          tasks={columns.done} 
+          status="done"
+          moveTask={moveTask}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onDragStart={handleDragStart}
+          onTaskClick={handleTaskClick}
+        />
+      </div>
+
+      {selectedTask && (
+        <TaskDetailDialog
+          isOpen={isTaskDetailOpen}
+          onClose={handleCloseTaskDetail}
+          task={selectedTask}
+          onUpdateTask={handleUpdateTask}
+        />
+      )}
+    </>
   );
 };
 
