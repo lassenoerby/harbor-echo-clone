@@ -74,59 +74,61 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] p-0">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] p-0 flex flex-col">
         <DialogHeader className="p-6 pb-2">
           <DialogTitle>Task Details</DialogTitle>
         </DialogHeader>
         
-        <ScrollArea className="max-h-[calc(90vh-8rem)]">
-          <div className="px-6 pb-20"> {/* Added more padding at the bottom */}
-            <form id="task-detail-form" onSubmit={handleSubmit} className="space-y-4 pt-4">
-              <TitleDescriptionSection 
-                title={title} 
-                setTitle={setTitle} 
-                description={description} 
-                setDescription={setDescription} 
-              />
-              
-              <TaskTypeSection
-                taskType={taskType}
-                setTaskType={handleTaskTypeChange}
-              />
-              
-              <PrioritySection 
-                priority={priority} 
-                setPriority={setPriority} 
-              />
+        <form id="task-detail-form" onSubmit={handleSubmit} className="flex flex-col flex-grow">
+          <ScrollArea className="flex-grow">
+            <div className="px-6 pb-6">
+              <div className="space-y-4 pt-4">
+                <TitleDescriptionSection 
+                  title={title} 
+                  setTitle={setTitle} 
+                  description={description} 
+                  setDescription={setDescription} 
+                />
+                
+                <TaskTypeSection
+                  taskType={taskType}
+                  setTaskType={handleTaskTypeChange}
+                />
+                
+                <PrioritySection 
+                  priority={priority} 
+                  setPriority={setPriority} 
+                />
 
-              <DeadlineSection 
-                deadline={deadline} 
-                setDeadline={setDeadline} 
-              />
-              
-              <AssignmentSection 
-                assignedTo={assignedTo} 
-                setAssignedTo={setAssignedTo} 
-                estimatedTime={estimatedTime} 
-                setEstimatedTime={setEstimatedTime} 
-              />
-              
-              <SubtasksSection 
-                subtasks={subtasks}
-                setSubtasks={setSubtasks}
-              />
-              
-              <ImageSection 
-                imageUrl={imageUrl} 
-                setImageUrl={setImageUrl} 
-              />
-            </form>
+                <DeadlineSection 
+                  deadline={deadline} 
+                  setDeadline={setDeadline} 
+                />
+                
+                <AssignmentSection 
+                  assignedTo={assignedTo} 
+                  setAssignedTo={setAssignedTo} 
+                  estimatedTime={estimatedTime} 
+                  setEstimatedTime={setEstimatedTime} 
+                />
+                
+                <SubtasksSection 
+                  subtasks={subtasks}
+                  setSubtasks={setSubtasks}
+                />
+                
+                <ImageSection 
+                  imageUrl={imageUrl} 
+                  setImageUrl={setImageUrl} 
+                />
+              </div>
+            </div>
+          </ScrollArea>
+          
+          <div className="sticky bottom-0 bg-background p-4 border-t mt-auto">
+            <TaskDetailFooter onCancel={onClose} />
           </div>
-        </ScrollArea>
-        
-        <div className="sticky bottom-0 bg-background p-6 pt-4 border-t">
-          <TaskDetailFooter onCancel={onClose} />
-        </div>
+        </form>
       </DialogContent>
     </Dialog>
   );
