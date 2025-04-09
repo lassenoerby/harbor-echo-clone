@@ -1,6 +1,7 @@
 
 export interface Subtask {
   id: string;
+  header: string; // Added header field
   description: string;
   responsible?: string;
   completed: boolean;

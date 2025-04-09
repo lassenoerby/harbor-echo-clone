@@ -18,6 +18,7 @@ export const SubtasksSection = ({ subtasks, setSubtasks }: SubtasksSectionProps)
       ...subtasks,
       {
         id: crypto.randomUUID(),
+        header: "",
         description: "",
         responsible: "",
         completed: false,
@@ -82,6 +83,16 @@ export const SubtasksSection = ({ subtasks, setSubtasks }: SubtasksSectionProps)
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
+              </div>
+
+              <div>
+                <Label className="text-xs">Header</Label>
+                <Input
+                  value={subtask.header || ""}
+                  onChange={(e) => updateSubtask(index, "header", e.target.value)}
+                  placeholder="Subtask header"
+                  className="mt-1"
+                />
               </div>
 
               <div>

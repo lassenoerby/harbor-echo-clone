@@ -20,6 +20,7 @@ export const SubtasksSection = ({ control }: SubtasksSectionProps) => {
   const addSubtask = () => {
     append({
       id: crypto.randomUUID(),
+      header: "",
       description: "",
       responsible: "",
       completed: false,
@@ -58,6 +59,20 @@ export const SubtasksSection = ({ control }: SubtasksSectionProps) => {
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
+
+              <FormField
+                control={control}
+                name={`subtasks.${index}.header`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Header</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Subtask header" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <FormField
                 control={control}
