@@ -12,7 +12,9 @@ export const TaskDetailFooter = ({ onCancel }: TaskDetailFooterProps) => {
       <Button type="button" variant="outline" onClick={onCancel}>
         Cancel
       </Button>
-      <Button type="submit" form="task-detail-form">Save Changes</Button>
+      <Button type="submit" form="task-detail-form" className="bg-harbor-600 hover:bg-harbor-700">
+        Save Changes
+      </Button>
     </div>
   );
 };

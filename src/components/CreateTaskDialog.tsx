@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { Task } from "@/types/task";
 import PredefinedTaskSelector, { predefinedTasks } from "@/components/task/PredefinedTaskSelector";
@@ -72,14 +71,14 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] p-0 flex flex-col">
+      <DialogContent className="sm:max-w-[500px] h-[85vh] p-0 flex flex-col overflow-hidden">
         <DialogHeader className="p-6 pb-2">
           <DialogTitle className="text-xl font-bold text-harbor-800">Create New Task</DialogTitle>
         </DialogHeader>
         
-        <div className="flex flex-col flex-grow">
-          <ScrollArea className="flex-grow">
-            <div className="px-6 pb-6">
+        <div className="flex flex-col h-full overflow-hidden">
+          <div className="flex-grow overflow-auto px-6">
+            <div className="pb-4">
               <PredefinedTaskSelector
                 selectedPredefined={selectedPredefined}
                 onSelectPredefined={handlePredefinedTaskSelect}
@@ -92,7 +91,7 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
                 onCancel={onClose}
               />
             </div>
-          </ScrollArea>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
