@@ -1,7 +1,6 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
 
 interface TaskDetailFooterProps {
   onCancel: () => void;
@@ -9,11 +8,11 @@ interface TaskDetailFooterProps {
 
 export const TaskDetailFooter = ({ onCancel }: TaskDetailFooterProps) => {
   return (
-    <DialogFooter className="pt-4">
+    <div className="flex justify-end space-x-2 w-full">
       <Button type="button" variant="outline" onClick={onCancel}>
         Cancel
       </Button>
-      <Button type="submit">Save Changes</Button>
-    </DialogFooter>
+      <Button type="submit" form="task-detail-form">Save Changes</Button>
+    </div>
   );
 };

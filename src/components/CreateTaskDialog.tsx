@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { Task } from "@/types/task";
 import PredefinedTaskSelector, { predefinedTasks } from "@/components/task/PredefinedTaskSelector";
@@ -69,22 +70,26 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] p-0">
+        <DialogHeader className="p-6 pb-2">
           <DialogTitle className="text-xl font-bold text-harbor-800">Create New Task</DialogTitle>
         </DialogHeader>
         
-        <PredefinedTaskSelector
-          selectedPredefined={selectedPredefined}
-          onSelectPredefined={handlePredefinedTaskSelect}
-          onCustomTask={handleCustomTask}
-        />
-        
-        <TaskForm 
-          form={form}
-          onSubmit={handleSubmit}
-          onCancel={onClose}
-        />
+        <ScrollArea className="max-h-[calc(90vh-8rem)]">
+          <div className="px-6">
+            <PredefinedTaskSelector
+              selectedPredefined={selectedPredefined}
+              onSelectPredefined={handlePredefinedTaskSelect}
+              onCustomTask={handleCustomTask}
+            />
+            
+            <TaskForm 
+              form={form}
+              onSubmit={handleSubmit}
+              onCancel={onClose}
+            />
+          </div>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );
