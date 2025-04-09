@@ -78,7 +78,7 @@ const CreateTaskDialog = ({ isOpen, onClose, onCreateTask }: CreateTaskDialogPro
         </DialogHeader>
         
         <ScrollArea className="max-h-[calc(90vh-8rem)]">
-          <div className="px-6">
+          <div className="px-6 pb-20"> {/* Added more padding at the bottom */}
             <PredefinedTaskSelector
               selectedPredefined={selectedPredefined}
               onSelectPredefined={handlePredefinedTaskSelect}

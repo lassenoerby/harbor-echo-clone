@@ -79,47 +79,49 @@ const TaskDetailDialog = ({ isOpen, onClose, task, onUpdateTask }: TaskDetailDia
           <DialogTitle>Task Details</DialogTitle>
         </DialogHeader>
         
-        <ScrollArea className="max-h-[calc(90vh-8rem)] px-6">
-          <form id="task-detail-form" onSubmit={handleSubmit} className="space-y-4 pt-4 pb-6">
-            <TitleDescriptionSection 
-              title={title} 
-              setTitle={setTitle} 
-              description={description} 
-              setDescription={setDescription} 
-            />
-            
-            <TaskTypeSection
-              taskType={taskType}
-              setTaskType={handleTaskTypeChange}
-            />
-            
-            <PrioritySection 
-              priority={priority} 
-              setPriority={setPriority} 
-            />
+        <ScrollArea className="max-h-[calc(90vh-8rem)]">
+          <div className="px-6 pb-20"> {/* Added more padding at the bottom */}
+            <form id="task-detail-form" onSubmit={handleSubmit} className="space-y-4 pt-4">
+              <TitleDescriptionSection 
+                title={title} 
+                setTitle={setTitle} 
+                description={description} 
+                setDescription={setDescription} 
+              />
+              
+              <TaskTypeSection
+                taskType={taskType}
+                setTaskType={handleTaskTypeChange}
+              />
+              
+              <PrioritySection 
+                priority={priority} 
+                setPriority={setPriority} 
+              />
 
-            <DeadlineSection 
-              deadline={deadline} 
-              setDeadline={setDeadline} 
-            />
-            
-            <AssignmentSection 
-              assignedTo={assignedTo} 
-              setAssignedTo={setAssignedTo} 
-              estimatedTime={estimatedTime} 
-              setEstimatedTime={setEstimatedTime} 
-            />
-            
-            <SubtasksSection 
-              subtasks={subtasks}
-              setSubtasks={setSubtasks}
-            />
-            
-            <ImageSection 
-              imageUrl={imageUrl} 
-              setImageUrl={setImageUrl} 
-            />
-          </form>
+              <DeadlineSection 
+                deadline={deadline} 
+                setDeadline={setDeadline} 
+              />
+              
+              <AssignmentSection 
+                assignedTo={assignedTo} 
+                setAssignedTo={setAssignedTo} 
+                estimatedTime={estimatedTime} 
+                setEstimatedTime={setEstimatedTime} 
+              />
+              
+              <SubtasksSection 
+                subtasks={subtasks}
+                setSubtasks={setSubtasks}
+              />
+              
+              <ImageSection 
+                imageUrl={imageUrl} 
+                setImageUrl={setImageUrl} 
+              />
+            </form>
+          </div>
         </ScrollArea>
         
         <div className="sticky bottom-0 bg-background p-6 pt-4 border-t">
