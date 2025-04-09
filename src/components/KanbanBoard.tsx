@@ -21,9 +21,10 @@ const addTask = (tasks: Task[], newTask: Omit<Task, "id">): Task[] => {
 
 interface KanbanBoardProps {
   onAddTask?: (task: Omit<Task, "id">) => void;
+  newTask?: Omit<Task, "id"> | null;
 }
 
-const KanbanBoard = ({ onAddTask }: KanbanBoardProps = {}) => {
+const KanbanBoard = ({ onAddTask, newTask }: KanbanBoardProps) => {
   const { toast } = useToast();
   // Initial sample data for the kanban board
   const [tasks, setTasks] = useState<Task[]>([
@@ -41,12 +42,17 @@ const KanbanBoard = ({ onAddTask }: KanbanBoardProps = {}) => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
 
-  // Listen for new tasks from parent component
+  // Process new task when it's received from props
   useEffect(() => {
-    if (onAddTask) {
-      // Implementation would be here if we were getting tasks from a parent
+    if (newTask) {
+      // Add the new task with status "new"
+      const newTaskWithStatus = {
+        ...newTask,
+        status: "new"
+      };
+      setTasks(prevTasks => addTask(prevTasks, newTaskWithStatus));
     }
-  }, [onAddTask]);
+  }, [newTask]);
 
   // Function to move tasks between columns
   const moveTask = (taskId: string, newStatus: string) => {

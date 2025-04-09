@@ -12,6 +12,7 @@ import { Task } from "@/types/task";
 const TaskOverview = () => {
   const { toast } = useToast();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [newlyCreatedTask, setNewlyCreatedTask] = useState<Omit<Task, "id"> | null>(null);
   
   const handleCreateTask = () => {
     setIsCreateDialogOpen(true);
@@ -22,8 +23,9 @@ const TaskOverview = () => {
   };
 
   const handleTaskCreated = (newTask: Omit<Task, "id">) => {
-    // The actual task creation will be handled in the KanbanBoard component
-    // We'll pass the task through to the KanbanBoard component
+    // Pass the newly created task down to the KanbanBoard
+    setNewlyCreatedTask(newTask);
+    
     toast({
       title: "Task Created",
       description: `Task "${newTask.title}" has been created!`,
@@ -45,7 +47,7 @@ const TaskOverview = () => {
               Create Task
             </Button>
           </div>
-          <KanbanBoard />
+          <KanbanBoard newTask={newlyCreatedTask} />
         </div>
       </main>
       <HarborFooter />
