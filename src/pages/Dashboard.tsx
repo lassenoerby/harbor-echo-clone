@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useState } from "react";
 import HarborNavbar from "@/components/HarborNavbar";
 import HarborFooter from "@/components/HarborFooter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,6 +7,8 @@ import { Progress } from "@/components/ui/progress";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { CalendarDays, Clock, TrendingUp, Users } from "lucide-react";
+import TimePeriodPicker from "@/components/dashboard/TimePeriodPicker";
+import MaintenanceTrendsList, { MaintenanceItem } from "@/components/dashboard/MaintenanceTrendsList";
 
 // Mock data for charts
 const completionRateData = [
@@ -44,13 +45,54 @@ const maintenanceTrendsData = [
   { month: "Jun", preventive: 23, corrective: 3 },
 ];
 
+// Mock data for the maintenance trends list
+const mockMaintenanceItems: MaintenanceItem[] = [
+  { id: "1", name: "Engine Service", count: 48, trend: "up", percentChange: 12 },
+  { id: "2", name: "Hull Cleaning", count: 36, trend: "up", percentChange: 8 },
+  { name: "Electrical Repairs", count: 24, trend: "down", percentChange: 5 },
+  { name: "Deck Washing", count: 22, trend: "up", percentChange: 15 },
+  { name: "Sail Repair", count: 18, trend: "down", percentChange: 7 },
+  { name: "Navigation System Check", count: 15, trend: "neutral", percentChange: 0 },
+  { name: "Propeller Maintenance", count: 12, trend: "up", percentChange: 20 },
+  { name: "Interior Cleaning", count: 10, trend: "down", percentChange: 10 },
+];
+
 const Dashboard = () => {
+  const [timePeriodLabel, setTimePeriodLabel] = useState("This Month");
+  const [maintenanceItems, setMaintenanceItems] = useState(mockMaintenanceItems);
+  
+  // This would normally fetch data based on the time period
+  const handleTimePeriodChange = (from: Date, to: Date, label: string) => {
+    console.log(`Date range selected: ${from.toDateString()} to ${to.toDateString()}`);
+    setTimePeriodLabel(label);
+    
+    // In a real application, you would fetch new data based on these dates
+    // For now, we'll just randomize the counts slightly to simulate different data
+    const updatedItems = maintenanceItems.map(item => ({
+      ...item,
+      count: Math.max(5, item.count + Math.floor(Math.random() * 10) - 5),
+      trend: ["up", "down", "neutral"][Math.floor(Math.random() * 3)] as "up" | "down" | "neutral",
+      percentChange: Math.floor(Math.random() * 25)
+    }));
+    
+    setMaintenanceItems(updatedItems);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <HarborNavbar />
       <main className="flex-grow bg-gray-50">
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-harbor-800 mb-6">Marina Performance Dashboard</h1>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+            <h1 className="text-3xl font-bold text-harbor-800">Marina Performance Dashboard</h1>
+            <div className="w-full md:w-auto">
+              <TimePeriodPicker onChange={handleTimePeriodChange} />
+            </div>
+          </div>
+          
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-harbor-700 mb-2">Overview for {timePeriodLabel}</h2>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <Card>
@@ -116,6 +158,7 @@ const Dashboard = () => {
               <TabsTrigger value="time">Time to Completion</TabsTrigger>
               <TabsTrigger value="employees">Employee Performance</TabsTrigger>
               <TabsTrigger value="maintenance">Maintenance Trends</TabsTrigger>
+              <TabsTrigger value="common">Common Maintenance</TabsTrigger>
             </TabsList>
             
             <TabsContent value="completion" className="mt-4">
@@ -229,6 +272,20 @@ const Dashboard = () => {
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="common" className="mt-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Common Maintenance Tasks</CardTitle>
+                  <CardDescription>
+                    Most frequently performed maintenance tasks and their trends
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <MaintenanceTrendsList items={maintenanceItems} />
                 </CardContent>
               </Card>
             </TabsContent>
