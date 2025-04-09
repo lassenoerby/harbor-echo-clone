@@ -23,6 +23,12 @@ type MaintenanceTrendsListProps = {
 };
 
 const MaintenanceTrendsList = ({ items }: MaintenanceTrendsListProps) => {
+  // Use memo to prevent unnecessary re-renders
+  const renderedItems = React.useMemo(() => items, [
+    // Only re-render when these actually change
+    items.map(item => `${item.id}-${item.count}-${item.percentChange}`).join(',')
+  ]);
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -34,7 +40,7 @@ const MaintenanceTrendsList = ({ items }: MaintenanceTrendsListProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {items.map((item) => (
+          {renderedItems.map((item) => (
             <TableRow key={item.id}>
               <TableCell className="font-medium">{item.name}</TableCell>
               <TableCell>{item.count}</TableCell>

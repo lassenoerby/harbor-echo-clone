@@ -12,6 +12,12 @@ type CompletionRateChartProps = {
 };
 
 const CompletionRateChart = ({ data }: CompletionRateChartProps) => {
+  // Use memo to prevent unnecessary re-renders of the chart data
+  const stableData = React.useMemo(() => data, [
+    // Only re-render when the data actually changes
+    JSON.stringify(data)
+  ]);
+
   return (
     <Card>
       <CardHeader>
@@ -24,7 +30,7 @@ const CompletionRateChart = ({ data }: CompletionRateChartProps) => {
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={data}
+              data={stableData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />

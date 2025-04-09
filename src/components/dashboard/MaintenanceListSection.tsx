@@ -8,6 +8,13 @@ type MaintenanceListSectionProps = {
 };
 
 const MaintenanceListSection = ({ items }: MaintenanceListSectionProps) => {
+  // Prevent re-renders by using a stable reference to the items
+  const stableItems = React.useMemo(() => items, [
+    // Only update when the IDs change or the count of items changes
+    items.map(item => item.id).join(','),
+    items.length
+  ]);
+
   return (
     <Card>
       <CardHeader>
@@ -17,7 +24,7 @@ const MaintenanceListSection = ({ items }: MaintenanceListSectionProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <MaintenanceTrendsList items={items} />
+        <MaintenanceTrendsList items={stableItems} />
       </CardContent>
     </Card>
   );

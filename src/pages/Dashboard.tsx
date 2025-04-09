@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import HarborNavbar from "@/components/HarborNavbar";
 import HarborFooter from "@/components/HarborFooter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -23,22 +23,57 @@ const Dashboard = () => {
   const [timePeriodLabel, setTimePeriodLabel] = useState("This Month");
   const [maintenanceItems, setMaintenanceItems] = useState(mockMaintenanceItems);
   
-  // This would normally fetch data based on the time period
-  const handleTimePeriodChange = (from: Date, to: Date, label: string) => {
+  // Use a stable function reference to prevent unnecessary re-renders
+  const handleTimePeriodChange = useCallback((from: Date, to: Date, label: string) => {
     console.log(`Date range selected: ${from.toDateString()} to ${to.toDateString()}`);
     setTimePeriodLabel(label);
     
-    // In a real application, you would fetch new data based on these dates
-    // For now, we'll just randomize the counts slightly to simulate different data
-    const updatedItems = maintenanceItems.map(item => ({
-      ...item,
-      count: Math.max(5, item.count + Math.floor(Math.random() * 10) - 5),
-      trend: ["up", "down", "neutral"][Math.floor(Math.random() * 3)] as "up" | "down" | "neutral",
-      percentChange: Math.floor(Math.random() * 25)
-    }));
+    // Generate a consistent set of data based on the date range
+    // This uses the start date as a seed to ensure we get the same values for the same date range
+    const seed = from.getDate() + from.getMonth() * 100;
+    
+    const updatedItems = maintenanceItems.map((item, index) => {
+      // Create a deterministic "random" value based on the item id and date range
+      const itemSeed = parseInt(item.id) + seed;
+      const countAdjustment = (itemSeed % 7) - 3; // Between -3 and 3
+      const trendOptions = ["up", "down", "neutral"] as const;
+      const trendIndex = itemSeed % 3;
+      
+      return {
+        ...item,
+        count: Math.max(5, item.count + countAdjustment),
+        trend: trendOptions[trendIndex],
+        percentChange: 5 + (itemSeed % 20) // Between 5 and 24
+      };
+    });
     
     setMaintenanceItems(updatedItems);
-  };
+  }, [maintenanceItems]);
+
+  // Use memo to make React only update UI when needed
+  const tabsContent = useMemo(() => (
+    <>
+      <TabsContent value="completion" className="mt-4">
+        <CompletionRateChart data={completionRateData} />
+      </TabsContent>
+
+      <TabsContent value="time" className="mt-4">
+        <TimeToCompletionChart data={timeToCompletionData} />
+      </TabsContent>
+
+      <TabsContent value="employees" className="mt-4">
+        <EmployeePerformanceChart data={employeePerformanceData} />
+      </TabsContent>
+
+      <TabsContent value="maintenance" className="mt-4">
+        <MaintenanceTrendsChart data={maintenanceTrendsData} />
+      </TabsContent>
+
+      <TabsContent value="common" className="mt-4">
+        <MaintenanceListSection items={maintenanceItems} />
+      </TabsContent>
+    </>
+  ), [maintenanceItems]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -67,25 +102,7 @@ const Dashboard = () => {
               <TabsTrigger value="common">Common Maintenance</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="completion" className="mt-4">
-              <CompletionRateChart data={completionRateData} />
-            </TabsContent>
-
-            <TabsContent value="time" className="mt-4">
-              <TimeToCompletionChart data={timeToCompletionData} />
-            </TabsContent>
-
-            <TabsContent value="employees" className="mt-4">
-              <EmployeePerformanceChart data={employeePerformanceData} />
-            </TabsContent>
-
-            <TabsContent value="maintenance" className="mt-4">
-              <MaintenanceTrendsChart data={maintenanceTrendsData} />
-            </TabsContent>
-
-            <TabsContent value="common" className="mt-4">
-              <MaintenanceListSection items={maintenanceItems} />
-            </TabsContent>
+            {tabsContent}
           </Tabs>
         </div>
       </main>

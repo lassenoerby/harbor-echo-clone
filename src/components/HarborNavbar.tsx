@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Plus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const HarborNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -16,17 +17,23 @@ const HarborNavbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center">
+            <Link to="/task-overview" className="flex items-center">
               <span className="text-2xl font-bold text-harbor-600">Harba</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/task-overview" className="text-gray-600 hover:text-harbor-600 transition-colors">
+            <Link 
+              to="/task-overview" 
+              className={`${location.pathname === '/task-overview' ? 'text-harbor-600 font-medium' : 'text-gray-600'} hover:text-harbor-600 transition-colors`}
+            >
               Task Overview
             </Link>
-            <Link to="/dashboard" className="text-gray-600 hover:text-harbor-600 transition-colors">
+            <Link 
+              to="/dashboard" 
+              className={`${location.pathname === '/dashboard' ? 'text-harbor-600 font-medium' : 'text-gray-600'} hover:text-harbor-600 transition-colors`}
+            >
               Dashboard
             </Link>
             <Button 
@@ -63,14 +70,14 @@ const HarborNavbar = () => {
             <div className="flex flex-col space-y-4">
               <Link
                 to="/task-overview"
-                className="text-gray-600 hover:text-harbor-600 transition-colors"
+                className={`${location.pathname === '/task-overview' ? 'text-harbor-600 font-medium' : 'text-gray-600'} hover:text-harbor-600 transition-colors`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Task Overview
               </Link>
               <Link
                 to="/dashboard"
-                className="text-gray-600 hover:text-harbor-600 transition-colors"
+                className={`${location.pathname === '/dashboard' ? 'text-harbor-600 font-medium' : 'text-gray-600'} hover:text-harbor-600 transition-colors`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Dashboard
