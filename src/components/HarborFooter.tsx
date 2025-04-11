@@ -9,38 +9,45 @@ const HarborFooter = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           <div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-6">
               <img 
                 src="/lovable-uploads/a3ae2dde-f517-47b4-8860-c7a934c82ce7.png" 
                 alt="Harba Logo" 
-                className="h-10 mr-2 bg-white rounded-full p-1" 
+                className="h-12 mr-2 bg-white rounded-full p-1" 
               />
             </div>
-            <p className="text-gray-100 mb-4 text-lg">
+            <p className="text-gray-100 mb-6 text-lg max-w-md leading-relaxed">
               Harba your All-in-One Marina Management Software that makes managing your Marina a Breeze.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-5">
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Facebook className="h-5 w-5" />
+                <Facebook className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Twitter className="h-5 w-5" />
+                <Twitter className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Instagram className="h-5 w-5" />
+                <Instagram className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Linkedin className="h-5 w-5" />
+                <Linkedin className="h-6 w-6" />
               </a>
             </div>
           </div>
           
           <div>
-            <h4 className="font-bold text-xl mb-4">Contact Us</h4>
-            <ul className="space-y-3 text-gray-300">
-              <li>info@harba.co</li>
-              <li>+45 70 60 35 60</li>
-              <li>55 Sortedam Dossering, DK-2100 Copenhagen, Denmark</li>
+            <h4 className="font-bold text-2xl mb-6">Contact Us</h4>
+            <ul className="space-y-4 text-gray-300 text-lg">
+              <li>
+                <a href="mailto:info@harba.co" className="hover:text-white transition-colors">info@harba.co</a>
+              </li>
+              <li>
+                <a href="tel:+4570603560" className="hover:text-white transition-colors">+45 70 60 35 60</a>
+              </li>
+              <li className="leading-relaxed">
+                55 Sortedam Dossering,<br />
+                DK-2100 Copenhagen, Denmark
+              </li>
             </ul>
           </div>
         </div>
