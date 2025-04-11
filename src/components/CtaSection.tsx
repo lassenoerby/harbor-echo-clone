@@ -1,10 +1,36 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Clipboard, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
+import CreateTaskDialog from "@/components/CreateTaskDialog";
+import { useToast } from "@/hooks/use-toast";
+import { Task } from "@/types/task";
 
 const CtaSection = () => {
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleCreateTask = () => {
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsCreateDialogOpen(false);
+  };
+
+  const handleTaskCreated = (newTask: Omit<Task, "id">) => {
+    // Add the task to the KanbanBoard
+    if (window && (window as any).addHarborTask) {
+      (window as any).addHarborTask(newTask);
+    }
+    
+    toast({
+      title: "Task Created",
+      description: `Task "${newTask.title}" has been created!`,
+    });
+  };
+
   return (
     <section className="bg-harbor-600 py-16">
       <div className="section-container">
@@ -19,13 +45,25 @@ const CtaSection = () => {
                 Open Task Overview
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-harbor-600/50 gap-2">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-white border-white hover:bg-harbor-600/50 gap-2"
+              onClick={handleCreateTask}
+            >
               <Plus className="h-5 w-5" />
               Create Task
             </Button>
           </div>
         </div>
       </div>
+
+      {/* Create Task Dialog */}
+      <CreateTaskDialog
+        isOpen={isCreateDialogOpen}
+        onClose={handleCloseDialog}
+        onCreateTask={handleTaskCreated}
+      />
     </section>
   );
 };

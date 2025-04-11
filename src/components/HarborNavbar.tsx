@@ -3,13 +3,38 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Plus } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import CreateTaskDialog from "@/components/CreateTaskDialog";
+import { useToast } from "@/hooks/use-toast";
+import { Task } from "@/types/task";
 
 const HarborNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const location = useLocation();
+  const { toast } = useToast();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleCreateTask = () => {
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsCreateDialogOpen(false);
+  };
+
+  const handleTaskCreated = (newTask: Omit<Task, "id">) => {
+    // Add the task to the KanbanBoard
+    if (window && (window as any).addHarborTask) {
+      (window as any).addHarborTask(newTask);
+    }
+    
+    toast({
+      title: "Task Created",
+      description: `Task "${newTask.title}" has been created!`,
+    });
   };
 
   return (
@@ -42,12 +67,10 @@ const HarborNavbar = () => {
             </Link>
             <Button 
               className="bg-harbor-500 hover:bg-harbor-600 gap-2"
-              asChild
+              onClick={handleCreateTask}
             >
-              <Link to="/task-overview">
-                <Plus className="h-5 w-5" />
-                Create Task
-              </Link>
+              <Plus className="h-5 w-5" />
+              Create Task
             </Button>
           </div>
 
@@ -88,17 +111,25 @@ const HarborNavbar = () => {
               </Link>
               <Button 
                 className="bg-harbor-500 hover:bg-harbor-600 w-full gap-2"
-                asChild
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  handleCreateTask();
+                }}
               >
-                <Link to="/task-overview" onClick={() => setIsMenuOpen(false)}>
-                  <Plus className="h-5 w-5" />
-                  Create Task
-                </Link>
+                <Plus className="h-5 w-5" />
+                Create Task
               </Button>
             </div>
           </div>
         )}
       </div>
+
+      {/* Create Task Dialog */}
+      <CreateTaskDialog
+        isOpen={isCreateDialogOpen}
+        onClose={handleCloseDialog}
+        onCreateTask={handleTaskCreated}
+      />
     </nav>
   );
 };
