@@ -38,9 +38,9 @@ const TaskOverview = () => {
       <main className="flex-grow">
         <div className="section-container">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-harbor-800">Task Overview</h1>
+            <h1 className="text-3xl font-bold text-harbor-500">Task Overview</h1>
             <Button 
-              className="bg-harbor-600 hover:bg-harbor-700 gap-2"
+              className="bg-harbor-500 hover:bg-harbor-600 gap-2"
               onClick={handleCreateTask}
             >
               <Plus className="h-5 w-5" />

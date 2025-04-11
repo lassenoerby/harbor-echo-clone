@@ -8,22 +8,28 @@ const HarborFooter = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-2xl font-bold mb-4">Harba</h3>
-            <p className="text-harbor-100 mb-4">
+            <div className="flex items-center mb-4">
+              <img 
+                src="/lovable-uploads/a3ae2dde-f517-47b4-8860-c7a934c82ce7.png" 
+                alt="Harba Logo" 
+                className="h-10 mr-2 bg-white rounded-full p-1" 
+              />
+            </div>
+            <p className="text-gray-100 mb-4">
               The complete marina management platform that helps you increase occupancy and 
               delight boaters with seamless experiences.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-harbor-100 hover:text-white transition-colors">
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-harbor-100 hover:text-white transition-colors">
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-harbor-100 hover:text-white transition-colors">
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-harbor-100 hover:text-white transition-colors">
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -31,7 +37,7 @@ const HarborFooter = () => {
           
           <div>
             <h4 className="font-bold text-lg mb-4">Product</h4>
-            <ul className="space-y-2 text-harbor-100">
+            <ul className="space-y-2 text-gray-300">
               <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Integrations</a></li>
@@ -41,7 +47,7 @@ const HarborFooter = () => {
           
           <div>
             <h4 className="font-bold text-lg mb-4">Resources</h4>
-            <ul className="space-y-2 text-harbor-100">
+            <ul className="space-y-2 text-gray-300">
               <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Marina Guide</a></li>
@@ -51,7 +57,7 @@ const HarborFooter = () => {
           
           <div>
             <h4 className="font-bold text-lg mb-4">Contact</h4>
-            <ul className="space-y-2 text-harbor-100">
+            <ul className="space-y-2 text-gray-300">
               <li>info@harba.co</li>
               <li>+1 (555) 123-4567</li>
               <li>123 Harbor Street<br />Portside, CA 90210</li>
@@ -59,7 +65,7 @@ const HarborFooter = () => {
           </div>
         </div>
         
-        <div className="border-t border-harbor-700 pt-8 mt-8 text-harbor-300 text-sm flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-harbor-700 pt-8 mt-8 text-gray-400 text-sm flex flex-col md:flex-row justify-between items-center">
           <p>&copy; {new Date().getFullYear()} Harba. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 210 50% 98%;
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -14,10 +14,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 201 100% 45%;
+    --primary: 217 84% 58%; /* Main Blue #3478F4 */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 240 5.9% 10%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -37,7 +37,7 @@
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 217 84% 58%; /* Main Blue #3478F4 */
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
@@ -46,19 +46,19 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 224 71% 4%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 224 71% 4%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 224 71% 4%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 217 84% 58%; /* Main Blue #3478F4 */
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 228 57% 18%; /* Blue #112AB0 */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -73,9 +73,10 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
+    
+    --sidebar-background: 224 71% 4%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 217 84% 58%; /* Main Blue #3478F4 */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
@@ -90,7 +91,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 
   .hover-scale {
@@ -112,4 +113,29 @@
   .subheading {
     @apply text-xl text-gray-600 mt-4 max-w-3xl mx-auto;
   }
+}
+
+/* Import Neue Montreal font */
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('/fonts/NeueMontreal-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('/fonts/NeueMontreal-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('/fonts/NeueMontreal-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
