@@ -29,12 +29,12 @@ const EmployeePerformanceChart = ({ data }: EmployeePerformanceChartProps) => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis yAxisId="left" orientation="left" stroke="#0891b2" />
-              <YAxis yAxisId="right" orientation="right" stroke="#7e22ce" />
+              <YAxis yAxisId="left" orientation="left" stroke="#112AB0" />
+              <YAxis yAxisId="right" orientation="right" stroke="#3478F4" />
               <Tooltip />
               <Legend />
-              <Bar yAxisId="left" dataKey="tasks" name="Tasks Completed" fill="#0891b2" />
-              <Bar yAxisId="right" dataKey="efficiency" name="Efficiency %" fill="#7e22ce" />
+              <Bar yAxisId="left" dataKey="tasks" name="Tasks Completed" fill="#112AB0" />
+              <Bar yAxisId="right" dataKey="efficiency" name="Efficiency %" fill="#3478F4" />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -32,7 +32,7 @@ const MaintenanceTrendsChart = ({ data }: MaintenanceTrendsChartProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="preventive" name="Preventive" stroke="#0891b2" strokeWidth={2} />
+              <Line type="monotone" dataKey="preventive" name="Preventive" stroke="#112AB0" strokeWidth={2} />
               <Line type="monotone" dataKey="corrective" name="Corrective" stroke="#e11d48" strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>

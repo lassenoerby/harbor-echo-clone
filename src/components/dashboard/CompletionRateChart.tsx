@@ -38,7 +38,7 @@ const CompletionRateChart = ({ data }: CompletionRateChartProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="completed" name="Completed %" fill="#0891b2" />
+              <Bar dataKey="completed" name="Completed %" fill="#112AB0" />
             </BarChart>
           </ResponsiveContainer>
         </div>

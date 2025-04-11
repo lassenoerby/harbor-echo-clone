@@ -31,7 +31,7 @@ const TimeToCompletionChart = ({ data }: TimeToCompletionChartProps) => {
               <YAxis label={{ value: 'Days', angle: -90, position: 'insideLeft' }} />
               <Tooltip />
               <Legend />
-              <Bar dataKey="time" name="Days to Complete" fill="#7e22ce" />
+              <Bar dataKey="time" name="Days to Complete" fill="#112AB0" />
             </BarChart>
           </ResponsiveContainer>
         </div>
